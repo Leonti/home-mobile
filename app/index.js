@@ -12,12 +12,15 @@ import {
 
 import TokenService from './TokenService'
 
+import Dashboard from './components/Dashboard'
+
 export default class Home extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isLoggedIn: false,
-      appState: AppState.currentState
+      appState: AppState.currentState,
+      accessToken: null
     }
   }
 
@@ -34,11 +37,25 @@ export default class Home extends Component {
     this.setState({appState: nextAppState})
   }
 
+  _setAccessToken = () => {
+    TokenService.getAccessToken()
+      .then(accessToken => {
+        console.log('Access token', accessToken)
+        this.setState({
+          accessToken: accessToken
+        })
+      })
+      .catch(error => console.log(error))
+  }
+
   _checkLoginStatus = () => {
     TokenService.isLoggedIn()
       .then(isLoggedIn => {
         console.log('Is logged in', isLoggedIn)
-        this.setState({ isLoggedIn: isLoggedIn })
+        this.setState({
+          isLoggedIn: isLoggedIn
+        })
+        this._setAccessToken()
       })
       .catch(error => console.log(error))
   }
@@ -51,19 +68,21 @@ export default class Home extends Component {
       .catch(error => console.log(error))
   }
 
+  _loginView = () => {
+    return <View style={styles.container}>
+      <Text style={styles.header}>Home - Login</Text>
+      <Text>
+        You are {this.state.isLoggedIn ? '' : 'not '}logged in.
+      </Text>
+      <Button
+        onPress={this._onLogin}
+        title={'Log In'}
+      />
+    </View>
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Home - Login</Text>
-        <Text>
-          You are {this.state.isLoggedIn ? '' : 'not '}logged in.
-        </Text>
-        <Button
-          onPress={this._onLogin}
-          title={'Log In'}
-        />
-      </View>
-    );
+    return this.state.isLoggedIn ? <Dashboard accessToken={this.state.accessToken} /> : this._loginView();
   }
 }
 

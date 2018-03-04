@@ -2,7 +2,7 @@ package com.leonti.home;
 
 import android.app.Application;
 
-import com.facebook.react.BuildConfig;
+import com.leonti.home.BuildConfig;
 import com.facebook.react.ReactApplication;
 import com.auth0.react.A0Auth0Package;
 import com.facebook.react.ReactNativeHost;

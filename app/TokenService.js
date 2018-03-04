@@ -29,7 +29,7 @@ export default class TokenService {
       return accessToken
     }
 
-    return TokenStorage._getAndSaveNewAccessToken()
+    return TokenService._getAndSaveNewAccessToken()
   }
 
   static async _getAndSaveNewAccessToken() {
