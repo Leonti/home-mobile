@@ -18,6 +18,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      initializing: true,
       isLoggedIn: false,
       appState: AppState.currentState,
       accessToken: null
@@ -26,38 +27,32 @@ export default class Home extends Component {
 
   componentDidMount () {
     AppState.addEventListener('change', this._handleAppStateChange)
-    this._checkLoginStatus()
+    this._checkLoginAndGetAccessToken()
   }
 
   _handleAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       console.log('App has come to the foreground!')
-      this._checkLoginStatus()
+      this._checkLoginAndGetAccessToken()
     }
     this.setState({appState: nextAppState})
   }
 
-  _setAccessToken = () => {
-    TokenService.getAccessToken()
-      .then(accessToken => {
-        console.log('Access token', accessToken)
-        this.setState({
-          accessToken: accessToken
-        })
+  _checkLoginAndGetAccessToken = async () => {
+    try {
+      this.setState({
+        isLoggedIn: await TokenService.isLoggedIn(),
+        initializing: false
       })
-      .catch(error => console.log(error))
-  }
 
-  _checkLoginStatus = () => {
-    TokenService.isLoggedIn()
-      .then(isLoggedIn => {
-        console.log('Is logged in', isLoggedIn)
+      if (this.state.isLoggedIn) {
         this.setState({
-          isLoggedIn: isLoggedIn
+          accessToken: await TokenService.getAccessToken()
         })
-        this._setAccessToken()
-      })
-      .catch(error => console.log(error))
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   _onLogin = () => {
@@ -81,8 +76,32 @@ export default class Home extends Component {
     </View>
   }
 
+  _refreshTokenView = () => {
+    return <View style={styles.container}>
+      <Text>
+        Refreshing authentication.
+      </Text>
+    </View>
+  }
+
+  _initView = () => {
+    return <View style={styles.container}>
+      <Text>
+        Initializing.
+      </Text>
+    </View>
+  }
+
   render() {
-    return this.state.isLoggedIn ? <Dashboard accessToken={this.state.accessToken} /> : this._loginView();
+    if (this.state.initializing) {
+      return this._initView()
+    }
+
+    if (this.state.isLoggedIn) {
+      return this.state.accessToken ? <Dashboard accessToken={this.state.accessToken} /> : this._refreshTokenView()
+    }
+
+    return this._loginView()
   }
 }
 
