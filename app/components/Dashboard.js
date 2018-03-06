@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
+  Button,
   AppState
 } from 'react-native'
 
 import LastReading from './LastReading';
-//import { heatingMedium, heatingHigh, coolingOn, acOff } from '../services/Ac'
-//import { ledOn, ledOff } from '../services/Led'
+import { heatingMedium, heatingHigh, coolingOn, acOff } from '../services/Ac'
+import { ledOn, ledOff } from '../services/Led'
 
 export default class Dashboard extends Component {
 
@@ -45,18 +46,36 @@ export default class Dashboard extends Component {
     })
   }
 
+  _apiAction = func => {
+    return () => func(this.props.accessToken)().then(res => console.log(res), e => console.log(e))
+  }
+
   render() {
     const lastReadingView = this.state.lastReading !== null ?
     <LastReading
-      temperature={this.state.lastReading.temperature}
-      humidity={this.state.lastReading.humidity}
-      co2={this.state.lastReading.co2}
-      timestamp={this.state.lastReading.timestamp}
+      reading={this.state.lastReading}
     /> : null;
 
     return (
-      <View>
-        <Text>{this.props.accessToken}</Text>
+      <View style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'flex-start'
+        }}>
+        <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+          }}>
+          <Button
+            onPress={this._apiAction(coolingOn)}
+            title={'Cooling'}
+          />
+          <Button
+            onPress={this._apiAction(acOff)}
+            title={'Off'}
+          />
+        </View>
         {lastReadingView}
       </View>
     )

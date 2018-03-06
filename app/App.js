@@ -46,7 +46,8 @@ export default class App extends Component {
 
       if (this.state.isLoggedIn) {
         this.setState({
-          accessToken: await TokenService.getAccessToken()
+          accessToken: await TokenService.getAccessToken(),
+          initializing: false
         })
       }
     } catch (e) {
@@ -57,7 +58,11 @@ export default class App extends Component {
   _onLogin = () => {
     TokenService.login()
       .then(() => {
-        this.setState({ isLoggedIn: true })
+        this.setState({
+          isLoggedIn: true,
+          initializing: false
+        })
+        this._checkLoginAndGetAccessToken()
       })
       .catch(error => console.log(error))
   }
