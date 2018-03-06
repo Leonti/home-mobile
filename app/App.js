@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
   Alert,
-  AppRegistry,
   Button,
   Platform,
   StyleSheet,
@@ -14,7 +13,7 @@ import TokenService from './TokenService'
 
 import Dashboard from './components/Dashboard'
 
-export default class Home extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -118,5 +117,3 @@ const styles = StyleSheet.create({
     margin: 10
   }
 });
-
-AppRegistry.registerComponent('Home', () => Home);

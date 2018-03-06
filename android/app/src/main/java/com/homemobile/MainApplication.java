@@ -1,8 +1,7 @@
-package com.leonti.home;
+package com.homemobile;
 
 import android.app.Application;
 
-import com.leonti.home.BuildConfig;
 import com.facebook.react.ReactApplication;
 import com.auth0.react.A0Auth0Package;
 import com.facebook.react.ReactNativeHost;
@@ -27,6 +26,11 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new A0Auth0Package()
       );
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
     }
   };
 

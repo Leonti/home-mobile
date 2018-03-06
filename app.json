@@ -1,4 +1,7 @@
 {
-  "name": "Home",
+  "expo": {
+    "sdkVersion": "25.0.0"
+  },
+  "name": "homemobile",
   "displayName": "Home"
 }
