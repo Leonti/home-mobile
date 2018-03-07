@@ -76,7 +76,7 @@ export default class Dashboard extends Component {
             onPress={this._apiAction(coolingOn)}
           >
             <Text style={{
-              fontSize: 30,
+              fontSize: 25,
               color: 'white'
             }}
             >COOLING</Text>
@@ -91,7 +91,7 @@ export default class Dashboard extends Component {
             onPress={this._apiAction(acOff)}
           >
             <Text style={{
-              fontSize: 30,
+              fontSize: 25,
               color: 'white'
             }}
             >OFF</Text>
