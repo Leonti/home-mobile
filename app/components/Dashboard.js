@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  Button,
+  TouchableOpacity,
   AppState
 } from 'react-native'
 
@@ -51,32 +51,52 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const lastReadingView = this.state.lastReading !== null ?
-    <LastReading
-      reading={this.state.lastReading}
-    /> : null;
-
     return (
       <View style={{
           flex: 1,
           flexDirection: 'column',
-          justifyContent: 'flex-start'
+          justifyContent: 'flex-start',
+          padding: 30
         }}>
+        <LastReading
+          reading={this.state.lastReading}
+        />
         <View style={{
-            flex: 1,
             flexDirection: 'row',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            marginTop: 30,
           }}>
-          <Button
+          <TouchableOpacity style={{
+            backgroundColor: '#2196f3',
+            width: 150,
+            height: 150,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
             onPress={this._apiAction(coolingOn)}
-            title={'Cooling'}
-          />
-          <Button
+          >
+            <Text style={{
+              fontSize: 30,
+              color: 'white'
+            }}
+            >COOLING</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{
+            backgroundColor: '#ff7961',
+            width: 150,
+            height: 150,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
             onPress={this._apiAction(acOff)}
-            title={'Off'}
-          />
+          >
+            <Text style={{
+              fontSize: 30,
+              color: 'white'
+            }}
+            >OFF</Text>
+          </TouchableOpacity>
         </View>
-        {lastReadingView}
       </View>
     )
   }
