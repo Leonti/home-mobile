@@ -56,7 +56,7 @@ export default class Dashboard extends Component {
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          padding: 30
+          padding: 20
         }}>
         <LastReading
           reading={this.state.lastReading}
