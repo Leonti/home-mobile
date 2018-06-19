@@ -51,6 +51,39 @@ export default class Dashboard extends Component {
   }
 
   render() {
+
+    const coolingButton = <TouchableOpacity style={{
+        backgroundColor: '#2196f3',
+        width: 150,
+        height: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+        onPress={this._apiAction(coolingOn)}
+      >
+        <Text style={{
+          fontSize: 25,
+          color: 'white'
+        }}
+        >COOLING</Text>
+      </TouchableOpacity>
+
+    const heatingButton = <TouchableOpacity style={{
+        backgroundColor: 'orange',
+        width: 150,
+        height: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+        onPress={this._apiAction(heatingMedium)}
+      >
+        <Text style={{
+          fontSize: 25,
+          color: 'white'
+        }}
+        >HEATING</Text>
+      </TouchableOpacity>
+
     return (
       <View style={{
           flex: 1,
@@ -66,21 +99,7 @@ export default class Dashboard extends Component {
             justifyContent: 'space-between',
             marginTop: 30,
           }}>
-          <TouchableOpacity style={{
-            backgroundColor: '#2196f3',
-            width: 150,
-            height: 150,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-            onPress={this._apiAction(coolingOn)}
-          >
-            <Text style={{
-              fontSize: 25,
-              color: 'white'
-            }}
-            >COOLING</Text>
-          </TouchableOpacity>
+          {heatingButton}
           <TouchableOpacity style={{
             backgroundColor: '#ff7961',
             width: 150,
