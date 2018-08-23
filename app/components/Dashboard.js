@@ -25,6 +25,10 @@ export default class Dashboard extends Component {
     this._refreshLastReading()
   }
 
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
   _handleAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       console.log('Dashboard has come to the foreground!')
